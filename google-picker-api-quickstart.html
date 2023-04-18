@@ -64,6 +64,7 @@
     tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope: SCOPES,
+      redirect_uri: 'postmessage',
       callback: '', // defined later
     });
     gisInited = true;
