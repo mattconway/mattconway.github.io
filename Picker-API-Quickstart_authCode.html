@@ -16,8 +16,6 @@
 
 <pre id="content" style="white-space: pre-wrap;"></pre>
 
-<button id="button-picker"></button>
-
 <script>
 
   window.addEventListener("load", pageLoaded);
@@ -59,7 +57,6 @@
       client_id: CLIENT_ID,
       scope: SCOPES,
       ux_mode: 'popup',
-      redirect_uri: 'https://localhost:8080',
       callback: (codeResponse) => {
         console.log('code: ' + codeResponse.code);
         console.log('scope: ' + codeResponse.scope);
