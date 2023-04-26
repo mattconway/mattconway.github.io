@@ -51,8 +51,28 @@
     btnPicker.addEventListener("click",CLIENT.requestCode)
   }
 
-  //Initialize a client where the user's browser receives a client auth code from Google.
+
   function initGoogleClient() {
+
+      CLIENT = google.accounts.oauth2.initCodeClient({
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      ux_mode: 'popup',
+      callback: (response) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', code_receiver_uri, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        // Set custom header for CRSF
+        xhr.setRequestHeader('X-Requested-With', 'XmlHttpRequest');
+        xhr.onload = function() {
+          console.log('Auth code response: ' + xhr.responseText);
+        };
+        xhr.send('code=' + response.code);
+      },
+    });
+  }
+  //Initialize a client where the user's browser receives a client auth code from Google.
+  function OLD_initGoogleClient() {
     CLIENT = google.accounts.oauth2.initCodeClient({
       client_id: CLIENT_ID,
       scope: SCOPES,
@@ -66,7 +86,7 @@
         console.log('error_uri: ' + codeResponse.error_uri);
 
         createPicker();
-        
+
         // const xhr = new XMLHttpRequest();
         // xhr.open('POST', CODE_RECEIVER_URI, true);
         // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
