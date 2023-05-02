@@ -5,10 +5,10 @@
   <title>Picker API Auth</title>
   <meta charset="utf-8" />
   <!-- Load the Google API Client library by adding the following script to the head section of your HTML page: -->
-  <script defer src="https://apis.google.com/js/api.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js"></script>
 
   <!-- google api, for the client object, for authenticaion and authorisation -->
-  <script defer src="https://accounts.google.com/gsi/client"></script>
+  <script async defer src="https://accounts.google.com/gsi/client" onload="clientInit"></script>
 
 </head>
 <body>
@@ -16,7 +16,7 @@
   <p>Chat GPT Picker Auth</p>
 
   <script>
-    window.addEventListener("load",clientInit);
+    //window.addEventListener("load",clientInit);
 
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
@@ -30,8 +30,8 @@
     const APP_ID = '169204966062';
 
     function clientInit() {
-    // Initialize the Google GIS client by calling the google.accounts.id.initialize() function with your client ID and the API key. Here's an example:
-    google.accounts.id.initialize({
+      // Initialize the Google GIS client by calling the google.accounts.id.initialize() function with your client ID and the API key. Here's an example:
+      google.accounts.id.initialize({
         client_id: CLIENT_ID,
         api_key: API_KEY
       });
