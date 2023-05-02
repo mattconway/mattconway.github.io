@@ -1,50 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <!-- To integrate Google Identity Services (GIS) and Google Picker Upload into a Bubble.io page without using JavaScript onload functions, you can follow these steps: -->
+  <head>
+  <title>Picker API Auth</title>
+  <meta charset="utf-8" />
+  <!-- Load the Google API Client library by adding the following script to the head section of your HTML page: -->
+  <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
 
-<!-- To integrate Google Identity Services (GIS) and Google Picker Upload into a Bubble.io page without using JavaScript onload functions, you can follow these steps: -->
+  <p>Chat GPT Picker Auth</p>
 
-<!-- Load the Google API Client library by adding the following script to the head section of your HTML page: -->
-<script src="https://apis.google.com/js/api.js"></script>
-<script>
+  <script>
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
+    const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.metadata.readonly';
+
+    // Client ID and API key from the Developer Console
+    const CLIENT_ID = '169204966062-knlnld874hqifa146fnb7s2l3h4rdvjd.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyCGYHJPkXl1RmrmburuBb3bMU57Gtc3CNc';
+
+    // AppId == Google project number from console.developers.google.com.
+    const APP_ID = '169204966062';
+
     // Initialize the Google GIS client by calling the google.accounts.id.initialize() function with your client ID and the API key. Here's an example:
-    google.accounts.id.initialize({
-      client_id: 'YOUR_CLIENT_ID',
-      api_key: 'YOUR_API_KEY'
-    });
-    //Replace YOUR_CLIENT_ID and YOUR_API_KEY with your own values.
+      google.accounts.id.initialize({
+        client_id: CLIENT_ID,
+        api_key: API_KEY
+      });
+      //Replace YOUR_CLIENT_ID and YOUR_API_KEY with your own values.
 
-    // To authenticate the user with Google Identity Services, you can use the google.accounts.id.prompt() method. This will show the Google sign-in dialog and prompt the user to sign in with their Google account.
-    google.accounts.id.prompt({
-      callback: handleCredentialResponse,
-      nonce: 'YOUR_NONCE',
-      state: 'YOUR_STATE'
-    });
-    // Replace YOUR_NONCE and YOUR_STATE with your own values.
+      // To authenticate the user with Google Identity Services, you can use the google.accounts.id.prompt() method. This will show the Google sign-in dialog and prompt the user to sign in with their Google account.
+      google.accounts.id.prompt({
+        callback: handleCredentialResponse,
+        nonce: 'YOUR_NONCE',
+        state: 'YOUR_STATE'
+      });
+      // Replace YOUR_NONCE and YOUR_STATE with your own values.
 
-    // In the handleCredentialResponse() function, you can use the google.accounts.id.getCredential() method to get the user's credentials. You can then use these credentials to authorize the Google Picker API.
-    function handleCredentialResponse(response) {
-      if (response.status === 'SUCCESS') {
-        const credential = google.accounts.id.getCredential();
-        const accessToken = credential.accessToken;
-        // Use the accessToken to authorize the Google Picker API
-        // ...
+      // In the handleCredentialResponse() function, you can use the google.accounts.id.getCredential() method to get the user's credentials. You can then use these credentials to authorize the Google Picker API.
+      function handleCredentialResponse(response) {
+        if (response.status === 'SUCCESS') {
+          const credential = google.accounts.id.getCredential();
+          const accessToken = credential.accessToken;
+          // Use the accessToken to authorize the Google Picker API
+          // ...
+        }
       }
-    }
 
-    // To set up the Google Picker API, you can use the google.picker.PickerBuilder() method to create a new picker instance. Here's an example:
-    const picker = new google.picker.PickerBuilder()
-      .addView(google.picker.ViewId.DOCS)
-      .setOAuthToken(accessToken)
-      .setDeveloperKey('YOUR_DEVELOPER_KEY')
-      .setCallback(pickerCallback)
-      .build();
-    // Replace YOUR_DEVELOPER_KEY with your own value.
+      // To set up the Google Picker API, you can use the google.picker.PickerBuilder() method to create a new picker instance. Here's an example:
+      const picker = new google.picker.PickerBuilder()
+        .addView(google.picker.ViewId.DOCS)
+        .setOAuthToken(accessToken)
+        .setDeveloperKey(API_KEY)
+        .setCallback(pickerCallback)
+        .build();
+      // Replace YOUR_DEVELOPER_KEY with your own value.
 
-    // Finally, you can use the picker.setVisible() method to show the picker dialog to the user.
-    picker.setVisible(true);
-    // Note that you will need to handle the user's file selection in the pickerCallback() function.
+      // Finally, you can use the picker.setVisible() method to show the picker dialog to the user.
+      picker.setVisible(true);
+      // Note that you will need to handle the user's file selection in the pickerCallback() function.
 
-</script>
+  </script>
 
-
-
-
-
+</body>
+</html>
