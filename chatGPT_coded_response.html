@@ -5,7 +5,7 @@
   <title>Picker API Auth</title>
   <meta charset="utf-8" />
   <!-- Load the Google API Client library by adding the following script to the head section of your HTML page: -->
-  <script async defer src="https://apis.google.com/js/api.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="pickerInit"></script>
 
   <!-- google api, for the client object, for authenticaion and authorisation -->
   <script async defer src="https://accounts.google.com/gsi/client" onload="clientInit"></script>
@@ -54,6 +54,11 @@
           // Use the accessToken to authorize the Google Picker API
           // ...
         }
+      }
+
+      function pickerInit() {
+        await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/drive/v3/rest');
+        // pickerInited = true;
       }
 
       // To set up the Google Picker API, you can use the google.picker.PickerBuilder() method to create a new picker instance. Here's an example:
