@@ -16,6 +16,8 @@
   <p>Chat GPT Picker Auth</p>
 
   <script>
+    window.addEventListener("load",clientInit);
+
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
     const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.metadata.readonly';
@@ -27,8 +29,9 @@
     // AppId == Google project number from console.developers.google.com.
     const APP_ID = '169204966062';
 
+    function clientInit() {
     // Initialize the Google GIS client by calling the google.accounts.id.initialize() function with your client ID and the API key. Here's an example:
-      google.accounts.id.initialize({
+    google.accounts.id.initialize({
         client_id: CLIENT_ID,
         api_key: API_KEY
       });
@@ -41,6 +44,7 @@
         state: 'YOUR_STATE'
       });
       // Replace YOUR_NONCE and YOUR_STATE with your own values.
+    }
 
       // In the handleCredentialResponse() function, you can use the google.accounts.id.getCredential() method to get the user's credentials. You can then use these credentials to authorize the Google Picker API.
       function handleCredentialResponse(response) {
