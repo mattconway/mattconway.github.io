@@ -1,55 +1,49 @@
-To integrate Google Identity Services (GIS) and Google Picker Upload into a Bubble.io page without using JavaScript onload functions, you can follow these steps:
 
-Load the Google API Client library by adding the following script to the head section of your HTML page:
-php
-Copy code
+<!-- To integrate Google Identity Services (GIS) and Google Picker Upload into a Bubble.io page without using JavaScript onload functions, you can follow these steps: -->
+
+<!-- Load the Google API Client library by adding the following script to the head section of your HTML page: -->
 <script src="https://apis.google.com/js/api.js"></script>
-Initialize the Google GIS client by calling the google.accounts.id.initialize() function with your client ID and the API key. Here's an example:
-php
-Copy code
-google.accounts.id.initialize({
-  client_id: 'YOUR_CLIENT_ID',
-  api_key: 'YOUR_API_KEY'
-});
-Replace YOUR_CLIENT_ID and YOUR_API_KEY with your own values.
+<script>
+    // Initialize the Google GIS client by calling the google.accounts.id.initialize() function with your client ID and the API key. Here's an example:
+    google.accounts.id.initialize({
+      client_id: 'YOUR_CLIENT_ID',
+      api_key: 'YOUR_API_KEY'
+    });
+    //Replace YOUR_CLIENT_ID and YOUR_API_KEY with your own values.
 
-To authenticate the user with Google Identity Services, you can use the google.accounts.id.prompt() method. This will show the Google sign-in dialog and prompt the user to sign in with their Google account.
-php
-Copy code
-google.accounts.id.prompt({
-  callback: handleCredentialResponse,
-  nonce: 'YOUR_NONCE',
-  state: 'YOUR_STATE'
-});
-Replace YOUR_NONCE and YOUR_STATE with your own values.
+    // To authenticate the user with Google Identity Services, you can use the google.accounts.id.prompt() method. This will show the Google sign-in dialog and prompt the user to sign in with their Google account.
+    google.accounts.id.prompt({
+      callback: handleCredentialResponse,
+      nonce: 'YOUR_NONCE',
+      state: 'YOUR_STATE'
+    });
+    // Replace YOUR_NONCE and YOUR_STATE with your own values.
 
-In the handleCredentialResponse() function, you can use the google.accounts.id.getCredential() method to get the user's credentials. You can then use these credentials to authorize the Google Picker API.
-javascript
-Copy code
-function handleCredentialResponse(response) {
-  if (response.status === 'SUCCESS') {
-    const credential = google.accounts.id.getCredential();
-    const accessToken = credential.accessToken;
-    // Use the accessToken to authorize the Google Picker API
-    // ...
-  }
-}
-To set up the Google Picker API, you can use the google.picker.PickerBuilder() method to create a new picker instance. Here's an example:
-scss
-Copy code
-const picker = new google.picker.PickerBuilder()
-  .addView(google.picker.ViewId.DOCS)
-  .setOAuthToken(accessToken)
-  .setDeveloperKey('YOUR_DEVELOPER_KEY')
-  .setCallback(pickerCallback)
-  .build();
-Replace YOUR_DEVELOPER_KEY with your own value.
+    // In the handleCredentialResponse() function, you can use the google.accounts.id.getCredential() method to get the user's credentials. You can then use these credentials to authorize the Google Picker API.
+    function handleCredentialResponse(response) {
+      if (response.status === 'SUCCESS') {
+        const credential = google.accounts.id.getCredential();
+        const accessToken = credential.accessToken;
+        // Use the accessToken to authorize the Google Picker API
+        // ...
+      }
+    }
 
-Finally, you can use the picker.setVisible() method to show the picker dialog to the user.
-arduino
-Copy code
-picker.setVisible(true);
-Note that you will need to handle the user's file selection in the pickerCallback() function.
+    // To set up the Google Picker API, you can use the google.picker.PickerBuilder() method to create a new picker instance. Here's an example:
+    const picker = new google.picker.PickerBuilder()
+      .addView(google.picker.ViewId.DOCS)
+      .setOAuthToken(accessToken)
+      .setDeveloperKey('YOUR_DEVELOPER_KEY')
+      .setCallback(pickerCallback)
+      .build();
+    // Replace YOUR_DEVELOPER_KEY with your own value.
+
+    // Finally, you can use the picker.setVisible() method to show the picker dialog to the user.
+    picker.setVisible(true);
+    // Note that you will need to handle the user's file selection in the pickerCallback() function.
+
+</script>
+
 
 
 
