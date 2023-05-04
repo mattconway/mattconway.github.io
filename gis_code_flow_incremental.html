@@ -10,8 +10,47 @@
   <p>Google Auth using GIS Authorization Code Model</p>
 
   <script>
-    //window.addEventListener("load",clientInit);
-  </script>
+    window.addEventListener("load", pageLoaded);
+
+    let CLIENT;
+    let ACCESS_TOKEN = null;
+
+    const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.metadata.readonly';
+
+    // TODO(developer): Set to client ID and API key from the Developer Console
+    const CLIENT_ID = '169204966062-knlnld874hqifa146fnb7s2l3h4rdvjd.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyCGYHJPkXl1RmrmburuBb3bMU57Gtc3CNc';
+
+    // TODO(developer): Replace with your own project number from console.developers.google.com.
+    const APP_ID = '169204966062';
+
+    function pageLoaded() {
+      //initialise client
+      initGoogleClient();
+    }
+
+
+    function initGoogleClient() {
+
+      CLIENT = google.accounts.oauth2.initCodeClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        ux_mode: 'popup',
+        callback: (response) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', code_receiver_uri, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          // Set custom header for CRSF
+          xhr.setRequestHeader('X-Requested-With', 'XmlHttpRequest');
+          xhr.onload = function() {
+            console.log('Auth code response: ' + xhr.responseText);
+          };
+          xhr.send('code=' + response.code);
+        },
+      });
+    }
+
+</script>
 
   <!-- Load the Google API Client library by adding the following script to the head section of your HTML page: -->
   <script async defer src="https://apis.google.com/js/api.js"></script>
