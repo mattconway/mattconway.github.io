@@ -10,6 +10,10 @@
 
   <p>Google Auth using GIS Authorization Code Model</p>
 
+
+  <!-- Call the requestCode() method of the code client to trigger the user flow: -->
+  <button onclick="CLIENT.requestCode();">Authorize with Google</button>  
+
   <script>
     window.addEventListener("load", pageLoaded);
 
@@ -25,6 +29,9 @@
     // TODO(developer): Replace with your own project number from console.developers.google.com.
     const APP_ID = '169204966062';
 
+    //just a dummy page call (self) for now, want to see console log appear
+    const CODE_RECEIVER_URI = 'https://mattconway.github.io/gis_code_flow_incremental.html'
+
     function pageLoaded() {
       //initialise client
       initGoogleClient();
@@ -39,7 +46,7 @@
         ux_mode: 'popup',
         callback: (response) => {
           const xhr = new XMLHttpRequest();
-          xhr.open('POST', code_receiver_uri, true);
+          xhr.open('POST', CODE_RECEIVER_URI, true);
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           // Set custom header for CRSF
           xhr.setRequestHeader('X-Requested-With', 'XmlHttpRequest');
